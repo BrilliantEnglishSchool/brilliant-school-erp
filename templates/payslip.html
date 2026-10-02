@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}{% block content %}<div class="card print-card"><h2 style="text-align:center">BRILLIANT ENGLISH SCHOOL</h2>
+<p style="text-align:center">Sangaiyumpham Part-II, Wangjing, Thoubal, Manipur</p><h3 style="text-align:center">SALARY PAYSLIP</h3>
+<table><tr><td><b>Employee:</b> {{p.name}}</td><td><b>Employee Code:</b> {{profile.employee_code if profile else '-'}}</td></tr>
+<tr><td><b>Designation:</b> {{profile.designation if profile else p.subject}}</td><td><b>Month:</b> {{p.payroll_month}}</td></tr>
+<tr><td><b>Session:</b> {{p.year}}</td><td><b>Payment Date:</b> {{p.payment_date or '-'}}</td></tr></table><br>
+<table><tr><th>Earnings</th><th>Amount</th></tr><tr><td>Basic Salary</td><td>₹{{'%.2f'|format(p.basic_salary)}}</td></tr><tr><td>Allowances</td><td>₹{{'%.2f'|format(p.allowances)}}</td></tr>
+<tr><th>Total Earnings</th><th>₹{{'%.2f'|format(p.basic_salary+p.allowances)}}</th></tr><tr><th>Deductions</th><th>₹{{'%.2f'|format(p.deductions)}}</th></tr><tr><th>Net Salary</th><th>₹{{'%.2f'|format(p.net_salary)}}</th></tr></table><br>
+<p><b>Payment Mode:</b> {{p.payment_mode}}</p><button onclick="window.print()">Print Payslip</button></div>{% endblock %}

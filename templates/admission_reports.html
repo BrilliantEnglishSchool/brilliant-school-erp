@@ -1,0 +1,3 @@
+{% extends 'layout.html' %}{% block content %}<h2>Admission Reports — {{session.year if session else ''}}</h2>
+<div class="card"><h3>By Status</h3><table><tr><th>Status</th><th>Applications</th></tr>{% for r in rows %}<tr><td>{{r.status}}</td><td>{{r.count}}</td></tr>{% endfor %}</table></div>
+<div class="card"><h3>By Class</h3><table><tr><th>Class</th><th>Applications</th></tr>{% for r in by_class %}<tr><td>{{r.class_applied}}</td><td>{{r.count}}</td></tr>{% endfor %}</table></div>{% endblock %}

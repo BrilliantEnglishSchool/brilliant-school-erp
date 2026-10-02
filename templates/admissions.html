@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}{% block content %}<h2>Admission Applications — {{session.year if session else ''}}</h2>
+<form method="post" class="card form-grid"><input type="date" name="application_date"><input name="student_name" placeholder="Student Name" required><input type="date" name="dob">
+<select name="gender"><option>Male</option><option>Female</option><option>Other</option></select><input name="class_applied" placeholder="Class Applied">
+<input name="father_name" placeholder="Father/Guardian Name"><input name="mother_name" placeholder="Mother Name"><input name="guardian_phone" placeholder="Phone">
+<input name="address" placeholder="Address"><input name="previous_school" placeholder="Previous School">
+<select name="status"><option>Pending</option><option>Under Review</option><option>Approved</option></select><input name="remarks" placeholder="Remarks"><button>Create Application</button></form>
+<div class="card"><table><tr><th>Application No.</th><th>Date</th><th>Student</th><th>Class</th><th>Phone</th><th>Status</th><th></th></tr>
+{% for r in rows %}<tr><td>{{r.application_no}}</td><td>{{r.application_date}}</td><td>{{r.student_name}}</td><td>{{r.class_applied}}</td><td>{{r.guardian_phone}}</td><td>{{r.status}}</td><td><a class="btn" href="{{url_for('admission_detail',application_id=r.id)}}">Open</a></td></tr>{% endfor %}</table></div>{% endblock %}

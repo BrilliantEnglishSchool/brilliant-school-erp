@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block title %}Timetable & Academic Planning{% endblock %}
+{% block content %}
+<div class="page-head">
+ <div><h1>Timetable & Academic Planning</h1><p class="muted">Create class-wise and section-wise weekly timetables for the active session.</p></div>
+ <div class="actions"><a class="btn" href="{{ url_for('calendar') }}">Academic Calendar</a><button class="btn" onclick="window.print()">Print</button></div>
+</div>
+
+<div class="panel">
+ <div class="panel-head"><h2>Select Class</h2></div>
+ <form method="get" class="filter-row">
+  <label>Class
+   <select name="class_id" required onchange="this.form.submit()"><option value="">Select</option>{% for c in classes %}<option value="{{c.id}}" {% if selected_class==c.id %}selected{% endif %}>{{c.name}}</option>{% endfor %}</select>
+  </label>
+  <label>Section
+   <select name="section_id"><option value="">All Sections</option>{% for s in sections %}<option value="{{s.id}}" {% if selected_section==s.id %}selected{% endif %}>{{s.name}}</option>{% endfor %}</select>
+  </label>
+  <button class="btn primary">View</button>
+ </form>
+</div>
+
+<div class="panel">
+ <div class="panel-head"><h2>Weekly Timetable{% if selected_class %} — Selected Class{% endif %}</h2></div>
+ {% if selected_class %}
+ <div class="tt-wrap"><table class="table timetable-table">
+  <thead><tr><th>Period</th>{% for d in days %}<th>{{d}}</th>{% endfor %}</tr></thead>
+  <tbody>
+  {% for p in periods %}
+  <tr><th>{{p.period_no}}<small>{{p.start_time}}–{{p.end_time}}</small></th>
+   {% for d in days %}
+    {% set found = namespace(e=None) %}
+    {% for e in entries if e.period_id==p.id and e.day==d %}{% set found.e=e %}{% endfor %}
+    <td>
+    {% if found.e %}
+      <div class="tt-cell"><b>{{found.e.subject_name or 'Free'}}</b><span>{{found.e.teacher_name}}</span>{% if found.e.room %}<small>Room: {{found.e.room}}</small>{% endif %}
+      <form method="post" action="{{url_for('timetable_delete',entry_id=found.e.id)}}"><button class="link-danger">Remove</button></form></div>
+    {% else %}<span class="muted">—</span>{% endif %}
+    </td>
+   {% endfor %}
+  </tr>
+  {% endfor %}
+  </tbody>
+ </table></div>
+ {% else %}<p class="muted">Select a class to view its timetable.</p>{% endif %}
+</div>
+
+<div class="panel">
+ <div class="panel-head"><h2>Add / Update Timetable Entry</h2></div>
+ <form method="post" action="{{url_for('timetable_save')}}" class="form-grid">
+  <label>Class<select name="class_id" required>{% for c in classes %}<option value="{{c.id}}">{{c.name}}</option>{% endfor %}</select></label>
+  <label>Section<select name="section_id"><option value="">All / General</option>{% for s in sections %}<option value="{{s.id}}">{{s.name}}</option>{% endfor %}</select></label>
+  <label>Day<select name="day" required>{% for d in days %}<option>{{d}}</option>{% endfor %}</select></label>
+  <label>Period<select name="period_id" required>{% for p in periods %}<option value="{{p.id}}">{{p.period_no}} — {{p.label}} ({{p.start_time}}–{{p.end_time}})</option>{% endfor %}</select></label>
+  <label>Subject<select name="subject_id"><option value="">Free Period</option>{% for s in subjects %}<option value="{{s.id}}">{{s.name}}</option>{% endfor %}</select></label>
+  <label>Teacher<select name="teacher_id"><option value="">Not Assigned</option>{% for s in staff %}<option value="{{s.id}}">{{s.full_name}}{% if s.designation %} — {{s.designation}}{% endif %}</option>{% endfor %}</select></label>
+  <label>Room <input name="room" placeholder="e.g. Room 4"></label>
+  <label>Notes <input name="notes" placeholder="Optional"></label>
+  <div><button class="btn primary">Save Entry</button></div>
+ </form>
+</div>
+
+<div class="panel">
+ <div class="panel-head"><h2>Period Management</h2></div>
+ <form method="post" action="{{url_for('timetable_periods')}}" class="period-form">
+  <input type="number" name="period_no" min="1" placeholder="No." required>
+  <input name="label" placeholder="Period / Assembly / Break" required>
+  <input type="time" name="start_time"><input type="time" name="end_time">
+  <button class="btn primary">Save Period</button>
+ </form>
+ <table class="table compact"><thead><tr><th>No.</th><th>Label</th><th>Time</th></tr></thead><tbody>{% for p in periods %}<tr><td>{{p.period_no}}</td><td>{{p.label}}</td><td>{{p.start_time}}–{{p.end_time}}</td></tr>{% endfor %}</tbody></table>
+</div>
+{% endblock %}

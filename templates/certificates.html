@@ -1,0 +1,5 @@
+{% extends 'layout.html' %}{% block content %}<h2>Student Certificates</h2>
+<form method="post" class="card form-grid"><select name="student_id" required><option value="">Select student</option>{% for s in students %}<option value="{{s.id}}">{{s.name}} — {{s.class_name}} — {{s.admission_no}}</option>{% endfor %}</select>
+<select name="certificate_type"><option>Bonafide Certificate</option><option>Transfer Certificate</option><option>Character Certificate</option><option>Study Certificate</option><option>Provisional Certificate</option><option>Other</option></select>
+<input type="date" name="issue_date"><input name="purpose" placeholder="Purpose"><input name="remarks" placeholder="Remarks"><button>Issue Certificate</button></form>
+<div class="card"><table><tr><th>Certificate No.</th><th>Student</th><th>Type</th><th>Date</th><th></th></tr>{% for r in rows %}<tr><td>{{r.certificate_no}}</td><td>{{r.name}}</td><td>{{r.certificate_type}}</td><td>{{r.issue_date}}</td><td><a class="btn" href="{{url_for('certificate_print',certificate_id=r.id)}}">Print</a></td></tr>{% endfor %}</table></div>{% endblock %}

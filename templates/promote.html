@@ -1,0 +1,12 @@
+{% extends "layout.html" %}{% block content %}
+<div class="top"><div><h1>Student Promotion</h1><div class="muted">Promote students from {{active.year}} without changing their historical records.</div></div></div>
+{% if not sessions %}<div class="card"><b>No future session is available.</b><p>Create the next academic session first from the Sessions module.</p></div>{% else %}
+<form method="post">
+<div class="card"><label>Promote to Session</label><select class="input" name="to_session_id" required>{% for s in sessions %}<option value="{{s.id}}">{{s.year}}</option>{% endfor %}</select></div>
+<div class="card"><h3>Select Students and New Class</h3><table class="table"><tr><th>Select</th><th>Student</th><th>Current Class</th><th>New Class</th><th>New Section</th></tr>
+{% for x in students %}<tr><td><input type="checkbox" name="student_id" value="{{x.id}}"></td><td>{{x.name}}</td><td>{{x.class_name}} {{x.section}}</td><td><input class="input" name="to_class_{{x.id}}" value="{{x.class_name}}"></td><td><input class="input" name="to_section_{{x.id}}" value="{{x.section or ''}}"></td></tr>{% endfor %}
+</table><br><button class="btn">Promote Selected Students</button></div>
+</form>{% endif %}
+<div class="card"><h3>Promotion History</h3><table class="table"><tr><th>Student</th><th>From</th><th>To</th><th>Class Change</th><th>Date</th></tr>
+{% for p in promotions %}<tr><td>{{p.name}}</td><td>{{p.from_year}}</td><td>{{p.to_year}}</td><td>{{p.from_class}} → {{p.to_class}}</td><td>{{p.promoted_date}}</td></tr>{% else %}<tr><td colspan="5">No promotion records yet.</td></tr>{% endfor %}</table></div>
+{% endblock %}

@@ -1,0 +1,15 @@
+ONLINE ERP DEPLOY FIX
+
+This version fixes the Render health-check route.
+Render checks /health and the application now provides that endpoint.
+
+For Render:
+- Build: pip install -r requirements.txt
+- Start: gunicorn --workers 1 --timeout 120 app:app
+- Health: /health
+- Environment variables: SECRET_KEY (generate), DATA_DIR=/var/data,
+  COOKIE_SECURE=1, ADMIN_USERNAME, ADMIN_PASSWORD
+
+IMPORTANT:
+Keep the repository PRIVATE.
+Do not upload passwords or FINAL_LOGIN_CREDENTIALS.txt.

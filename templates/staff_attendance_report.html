@@ -1,0 +1,3 @@
+{% extends 'layout.html' %}{% block content %}<h2>Staff Attendance Report</h2><form method="get" class="card form-grid"><input type="month" name="month" value="{{month}}"><button>Generate</button></form>
+<div class="card"><table><tr><th>Staff</th><th>Present</th><th>Absent</th><th>Late</th><th>Leave</th><th>Total</th><th>Attendance %</th></tr>
+{% for r in rows %}<tr><td>{{r.staff.name}}</td><td>{{r.present}}</td><td>{{r.absent}}</td><td>{{r.late}}</td><td>{{r.leave}}</td><td>{{r.total}}</td><td>{{'%.2f'|format(r.percentage)}}%</td></tr>{% endfor %}</table></div>{% endblock %}

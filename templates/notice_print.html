@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}{% block content %}<div class="card print-card">
+<h2 style="text-align:center">BRILLIANT ENGLISH SCHOOL</h2><p style="text-align:center">Sangaiyumpham Part-II, Wangjing, Thoubal, Manipur</p>
+<hr><p><b>NOTICE NO.:</b> {{n.notice_no}} <span style="float:right"><b>Date:</b> {{n.notice_date}}</span></p>
+<h2 style="text-align:center">{{n.title}}</h2><p><b>To:</b> {{n.audience}}</p>
+<div style="white-space:pre-wrap;line-height:1.7">{{n.content}}</div><br><br>
+<p style="text-align:right"><b>Founder-Principal</b><br>Md Ahamad Khan</p><button onclick="window.print()">Print Notice</button></div>{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}{% block content %}<h2>Staff Attendance</h2>
+<form method="get" class="card form-grid"><input type="date" name="date" value="{{date}}"><button>Load</button></form>
+<form method="post"><input type="hidden" name="date" value="{{date}}"><div class="card"><table><tr><th>Staff</th><th>Status</th><th>Check In</th><th>Check Out</th><th>Remarks</th></tr>
+{% for s in staff %}{% set e=existing.get(s.id) %}<tr><td>{{s.name}}</td><td><select name="status_{{s.id}}">{% for x in ['Present','Absent','Late','Leave'] %}<option {% if e and e.status==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></td>
+<td><input type="time" name="checkin_{{s.id}}" value="{{e.check_in if e else ''}}"></td><td><input type="time" name="checkout_{{s.id}}" value="{{e.check_out if e else ''}}"></td><td><input name="remarks_{{s.id}}" value="{{e.remarks if e else ''}}"></td></tr>{% endfor %}
+</table><button>Save Staff Attendance</button></div></form>{% endblock %}

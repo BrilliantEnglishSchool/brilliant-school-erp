@@ -1,0 +1,3 @@
+{% extends 'layout.html' %}{% block content %}<h2>Fee Heads</h2>
+<form method="post" class="card form-grid"><input name="name" placeholder="Fee head" required><input name="description" placeholder="Description"><button>Add Fee Head</button></form>
+<div class="card"><table><tr><th>Fee Head</th><th>Description</th><th>Status</th></tr>{% for h in heads %}<tr><td>{{h.name}}</td><td>{{h.description or ''}}</td><td>{{h.status}}</td></tr>{% endfor %}</table></div>{% endblock %}

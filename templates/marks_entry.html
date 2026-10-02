@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}{% block content %}
+<h2>Marks Entry — {{paper.subject_name}}</h2><p>{{group.name}} | Class {{group.class_name}} | Maximum {{paper.max_marks}} | Pass {{paper.pass_marks}}</p>
+<form method="post"><div class="card"><table><tr><th>Roll</th><th>Student</th><th>Section</th><th>Marks</th></tr>
+{% for s in students %}<tr><td>{{s.roll_number or '-'}}</td><td>{{s.name}}</td><td>{{s.section or '-'}}</td>
+<td><input type="number" step="0.01" min="0" max="{{paper.max_marks}}" name="marks_{{s.id}}" value="{{existing.get(s.id,'')}}"></td></tr>{% endfor %}
+</table><button>Save Marks</button></div></form>{% endblock %}

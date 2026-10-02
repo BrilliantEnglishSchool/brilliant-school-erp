@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}{% block content %}<div class="card print-card">
+<h2 style="text-align:center">BRILLIANT ENGLISH SCHOOL</h2><p style="text-align:center">Sangaiyumpham Part-II, Wangjing, Thoubal, Manipur</p>
+<h3 style="text-align:center">FEE RECEIPT</h3><table><tr><td><b>Receipt No.:</b> {{payment.receipt_no}}</td><td><b>Date:</b> {{payment.payment_date}}</td></tr>
+<tr><td><b>Student:</b> {{payment.student_name}}</td><td><b>Admission No.:</b> {{payment.admission_no}}</td></tr>
+<tr><td><b>Class:</b> {{payment.class_name}} {{payment.section or ''}}</td><td><b>Session:</b> {{payment.year}}</td></tr></table><br>
+<table><tr><th>Fee Head</th><th>Amount</th></tr>{% for i in items %}<tr><td>{{i.fee_head}}</td><td>₹{{'%.2f'|format(i.amount)}}</td></tr>{% endfor %}
+{% if not items %}<tr><td>General Fee Payment</td><td>₹{{'%.2f'|format(payment.amount)}}</td></tr>{% endif %}
+<tr><th>Total Paid</th><th>₹{{'%.2f'|format(payment.amount)}}</th></tr></table>
+<p><b>Payment Mode:</b> {{payment.payment_mode}}</p><p><b>Remarks:</b> {{payment.remarks or '-'}}</p>
+<button onclick="window.print()">Print Receipt</button></div>{% endblock %}

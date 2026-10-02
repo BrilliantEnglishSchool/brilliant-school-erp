@@ -1,0 +1,3 @@
+{% extends 'layout.html' %}{% block content %}<h2>Communication Reports</h2>
+<div class="card"><h3>Notices by Category</h3><table><tr><th>Category</th><th>Count</th></tr>{% for r in notice_counts %}<tr><td>{{r.category}}</td><td>{{r.count}}</td></tr>{% endfor %}</table></div>
+<div class="card"><h3>Messages</h3><table><tr><th>Channel</th><th>Status</th><th>Count</th></tr>{% for r in msg_counts %}<tr><td>{{r.channel}}</td><td>{{r.status}}</td><td>{{r.count}}</td></tr>{% endfor %}</table></div>{% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}{% block content %}<h2>Fee Structure — {{session.year if session else ''}}</h2>
+<form method="post" class="card form-grid"><input name="class_name" placeholder="Class (e.g. IX)" required>
+<select name="fee_head_id" required><option value="">Fee head</option>{% for h in heads %}<option value="{{h.id}}">{{h.name}}</option>{% endfor %}</select>
+<input type="number" step="0.01" name="amount" placeholder="Amount" required>
+<select name="frequency"><option>Monthly</option><option>Annual</option><option>One Time</option></select><button>Save Structure</button></form>
+<div class="card"><table><tr><th>Class</th><th>Fee Head</th><th>Amount</th><th>Frequency</th></tr>
+{% for x in structures %}<tr><td>{{x.class_name}}</td><td>{{x.fee_head}}</td><td>₹{{'%.2f'|format(x.amount)}}</td><td>{{x.frequency}}</td></tr>{% endfor %}</table></div>{% endblock %}

@@ -1,0 +1,4 @@
+{% extends 'layout.html' %}{% block content %}<h2>Student ID Card</h2>
+<div class="card"><h3>BRILLIANT ENGLISH SCHOOL</h3><p><b>Student:</b> {{student.name}}</p><p><b>Admission No.:</b> {{student.admission_no}}</p><p><b>Class:</b> {{student.class_name}} {{student.section or ''}}</p><p><b>Roll:</b> {{student.roll_number or '-'}}</p>
+{% if card %}<p><b>Card No.:</b> {{card.card_no}}</p><p><b>Issued:</b> {{card.issue_date}}</p><p><b>Valid Until:</b> {{card.valid_until or '-'}}</p><button onclick="window.print()">Print ID Card</button>{% else %}
+<form method="post" class="form-grid"><input type="date" name="issue_date"><input type="date" name="valid_until"><button>Generate ID Card</button></form>{% endif %}</div>{% endblock %}

@@ -1,0 +1,4 @@
+{% extends 'layout.html' %}{% block content %}<h2>Fee Reports — {{session.year if session else ''}}</h2>
+<div class="card"><h3>By Payment Mode</h3><table><tr><th>Mode</th><th>Transactions</th><th>Total</th></tr>{% for r in by_mode %}<tr><td>{{r.payment_mode}}</td><td>{{r.count}}</td><td>₹{{'%.2f'|format(r.total)}}</td></tr>{% endfor %}</table></div>
+<div class="card"><h3>By Class</h3><table><tr><th>Class</th><th>Collected</th></tr>{% for r in by_class %}<tr><td>{{r.class_name}}</td><td>₹{{'%.2f'|format(r.total)}}</td></tr>{% endfor %}</table></div>
+<div class="card"><h3>Daily Collection</h3><table><tr><th>Date</th><th>Total</th></tr>{% for r in by_day %}<tr><td>{{r.payment_date}}</td><td>₹{{'%.2f'|format(r.total)}}</td></tr>{% endfor %}</table></div>{% endblock %}

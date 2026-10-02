@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}{% block content %}<h2>Staff HR Profiles</h2>
+<form method="post" class="card form-grid"><select name="staff_id" required><option value="">Select staff</option>{% for s in staff %}<option value="{{s.id}}">{{s.name}}</option>{% endfor %}</select>
+<input name="employee_code" placeholder="Employee Code"><input name="designation" placeholder="Designation"><input name="department" placeholder="Department">
+<input type="date" name="joining_date"><select name="employment_type"><option>Permanent</option><option>Contract</option><option>Part Time</option><option>Probation</option></select>
+<input name="qualification" placeholder="Qualification"><input name="phone" placeholder="Phone"><input name="email" placeholder="Email"><input name="address" placeholder="Address">
+<input name="bank_account_last4" placeholder="Bank A/C last 4 digits"><input name="pan_last4" placeholder="PAN last 4 digits"><button>Save Profile</button></form>
+<div class="card"><table><tr><th>Employee</th><th>Code</th><th>Designation</th><th>Department</th><th>Joining</th><th>Type</th><th>Phone</th></tr>
+{% for p in profiles %}<tr><td>{{p.name}}</td><td>{{p.employee_code or ''}}</td><td>{{p.designation or ''}}</td><td>{{p.department or ''}}</td><td>{{p.joining_date or ''}}</td><td>{{p.employment_type}}</td><td>{{p.phone or ''}}</td></tr>{% endfor %}</table></div>{% endblock %}

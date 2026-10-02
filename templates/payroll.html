@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}{% block content %}<h2>Payroll — {{month}}</h2>
+<form method="get" class="card form-grid"><input type="month" name="month" value="{{month}}"><button>Load</button></form>
+<form method="post" class="card form-grid"><input type="hidden" name="month" value="{{month}}"><select name="staff_id" required><option value="">Select staff</option>{% for s in staff %}<option value="{{s.id}}">{{s.name}}</option>{% endfor %}</select>
+<input type="number" step="0.01" name="basic_salary" placeholder="Basic Salary" required><input type="number" step="0.01" name="allowances" placeholder="Allowances"><input type="number" step="0.01" name="deductions" placeholder="Deductions"><input type="date" name="payment_date">
+<select name="payment_mode"><option>Bank Transfer</option><option>Cash</option><option>UPI</option><option>Cheque</option></select><button>Process Payroll</button></form>
+<div class="card"><table><tr><th>Staff</th><th>Basic</th><th>Allowances</th><th>Deductions</th><th>Net Salary</th><th>Payment Date</th><th></th></tr>
+{% for r in rows %}<tr><td>{{r.name}}</td><td>₹{{'%.2f'|format(r.basic_salary)}}</td><td>₹{{'%.2f'|format(r.allowances)}}</td><td>₹{{'%.2f'|format(r.deductions)}}</td><td>₹{{'%.2f'|format(r.net_salary)}}</td><td>{{r.payment_date or '-'}}</td><td><a class="btn" href="{{url_for('payslip',payroll_id=r.id)}}">Payslip</a></td></tr>{% endfor %}</table></div>{% endblock %}

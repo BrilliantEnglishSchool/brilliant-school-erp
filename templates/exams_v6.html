@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}{% block content %}
+<h2>Examination Management</h2><div class="card"><form method="post" class="form-grid">
+<input name="name" placeholder="Examination name" required><input name="class_name" placeholder="Class (e.g. IX)" required><input type="date" name="exam_date"><button>Create Examination</button>
+</form></div><div class="card"><table><tr><th>Exam</th><th>Class</th><th>Date</th><th>Status</th><th></th></tr>
+{% for g in groups %}<tr><td>{{g.name}}</td><td>{{g.class_name}}</td><td>{{g.exam_date or '-'}}</td><td>{{g.status}}</td><td><a class="btn" href="{{url_for('exam_group',group_id=g.id)}}">Manage</a></td></tr>{% endfor %}
+</table></div>{% endblock %}

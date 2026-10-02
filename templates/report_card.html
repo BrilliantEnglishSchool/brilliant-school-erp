@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}{% block content %}
+<div class="card print-card"><h2 style="text-align:center">BRILLIANT ENGLISH SCHOOL</h2><p style="text-align:center">Sangaiyumpham Part-II, Wangjing, Thoubal, Manipur</p>
+<h3 style="text-align:center">REPORT CARD — {{group.name}}</h3>
+<table><tr><td><b>Student:</b> {{student.name}}</td><td><b>Admission No.:</b> {{student.admission_no}}</td></tr>
+<tr><td><b>Class:</b> {{student.class_name}}</td><td><b>Section:</b> {{student.section or '-'}}</td></tr><tr><td><b>Roll No.:</b> {{student.roll_number or '-'}}</td><td><b>Session:</b> {{group.year}}</td></tr></table><br>
+<table><tr><th>Subject</th><th>Marks</th><th>Maximum</th><th>Status</th></tr>
+{% for d in details %}<tr><td>{{d.subject}}</td><td>{{'%.2f'|format(d.marks)}}</td><td>{{'%.2f'|format(d.max_marks)}}</td><td>{{'PASS' if d.passed else 'FAIL'}}</td></tr>{% endfor %}
+<tr><th>Total</th><th>{{'%.2f'|format(total)}}</th><th>{{'%.2f'|format(max_total)}}</th><th></th></tr></table><br>
+<table><tr><th>Percentage</th><th>Grade</th><th>Result</th><th>Class Rank</th></tr><tr><td>{{'%.2f'|format(percentage)}}%</td><td>{{grade}}</td><td>{{'PASS' if passed else 'FAIL'}}</td><td>{{rank}}</td></tr></table><br>
+<button onclick="window.print()">Print Report Card</button></div>{% endblock %}

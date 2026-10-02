@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brilliant English School ERP — Login</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body class="login-page">
+<div class="login-shell">
+  <div class="login-brand">
+    <img src="{{ url_for('static', filename='school_logo.png') }}" alt="School Logo">
+    <h1>BRILLIANT ENGLISH SCHOOL</h1>
+    <p>SANGAIYUMPHAM PART-II, WANGJING, THOUBAL, MANIPUR</p>
+    <strong>School Management ERP</strong>
+  </div>
+  <div class="login-card">
+    <h2>Administrator Login</h2>
+    <p class="muted">Sign in to access the school ERP</p>
+    {% with messages=get_flashed_messages() %}{% for m in messages %}<div class="login-error">{{m}}</div>{% endfor %}{% endwith %}
+    <form method="post">
+      <label>Username<input name="username" value="admin" required autofocus></label>
+      <label>Password<input type="password" name="password" placeholder="Enter password" required></label>
+      <button class="login-btn">LOGIN</button>
+    </form>
+    <div class="credential-hint"><b>Administrator access</b><br>Use the username and password configured for this school ERP.</div>
+  </div>
+</div>
+</body></html>

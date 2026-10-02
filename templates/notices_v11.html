@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}{% block content %}<h2>School Notices & Circulars</h2>
+<form method="post" class="card form-grid"><input type="date" name="notice_date"><input name="title" placeholder="Notice Title" required>
+<select name="category"><option>General</option><option>Academic</option><option>Examination</option><option>Holiday</option><option>Staff</option><option>Admission</option><option>Event</option><option>Fee</option></select>
+<select name="audience"><option>All</option><option>Students</option><option>Parents</option><option>Staff</option></select>
+<textarea name="content" rows="8" placeholder="Notice content" required></textarea><select name="publish_status"><option>Published</option><option>Draft</option></select><button>Create Notice</button></form>
+<div class="card"><table><tr><th>Notice No.</th><th>Date</th><th>Title</th><th>Category</th><th>Audience</th><th>Status</th><th></th></tr>
+{% for n in rows %}<tr><td>{{n.notice_no}}</td><td>{{n.notice_date}}</td><td>{{n.title}}</td><td>{{n.category}}</td><td>{{n.audience}}</td><td>{{n.publish_status}}</td><td><a class="btn" href="{{url_for('notice_print',notice_id=n.id)}}">Print</a></td></tr>{% endfor %}</table></div>{% endblock %}

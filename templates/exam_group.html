@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}{% block content %}
+<h2>{{group.name}} — Class {{group.class_name}}</h2><div class="card"><h3>Add Subject Paper</h3>
+<form method="post" class="form-grid"><select name="subject_name" required><option value="">Select subject</option>
+{% for s in subjects %}<option value="{{s.name}}">{{s.name}}</option>{% endfor %}</select>
+<input type="number" step="0.01" name="max_marks" value="100"><input type="number" step="0.01" name="pass_marks" value="33"><button>Add Paper</button></form></div>
+<div class="card"><table><tr><th>Subject</th><th>Max</th><th>Pass</th><th></th></tr>
+{% for p in papers %}<tr><td>{{p.subject_name}}</td><td>{{p.max_marks}}</td><td>{{p.pass_marks}}</td><td><a class="btn" href="{{url_for('enter_marks',group_id=group.id,paper_id=p.id)}}">Enter Marks</a></td></tr>{% endfor %}
+</table><p><a class="btn" href="{{url_for('results',group_id=group.id)}}">View Results</a></p></div>{% endblock %}

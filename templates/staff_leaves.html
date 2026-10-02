@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}{% block content %}<h2>Staff Leave Management</h2>
+<form method="post" class="card form-grid"><select name="staff_id" required><option value="">Select staff</option>{% for s in staff %}<option value="{{s.id}}">{{s.name}}</option>{% endfor %}</select>
+<input type="date" name="from_date" required><input type="date" name="to_date" required><select name="leave_type"><option>Casual</option><option>Medical</option><option>Earned</option><option>Emergency</option><option>Other</option></select>
+<input name="reason" placeholder="Reason"><select name="status"><option>Approved</option><option>Pending</option><option>Rejected</option></select><button>Add Leave</button></form>
+<div class="card"><table><tr><th>Staff</th><th>From</th><th>To</th><th>Type</th><th>Reason</th><th>Status</th></tr>
+{% for r in rows %}<tr><td>{{r.staff_name}}</td><td>{{r.from_date}}</td><td>{{r.to_date}}</td><td>{{r.leave_type}}</td><td>{{r.reason or ''}}</td><td>{{r.status}}</td></tr>{% endfor %}</table></div>{% endblock %}

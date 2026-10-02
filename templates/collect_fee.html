@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}{% block content %}<h2>Collect Fee</h2>
+<form method="post" class="card form-grid"><select name="student_id" required><option value="">Select student</option>
+{% for s in students %}<option value="{{s.id}}">{{s.name}} — {{s.class_name}} {{s.section or ''}} — {{s.admission_no}}</option>{% endfor %}</select>
+<input type="date" name="payment_date"><input type="number" step="0.01" name="amount" placeholder="Amount" required>
+<select name="payment_mode"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Cheque</option><option>Other</option></select>
+<input name="remarks" placeholder="Remarks">
+<div><b>Allocate to:</b>{% for h in heads %}<label style="margin-right:10px"><input type="checkbox" name="fee_head_id" value="{{h.id}}"> {{h.name}}</label>{% endfor %}</div>
+<button>Collect & Generate Receipt</button></form>{% endblock %}

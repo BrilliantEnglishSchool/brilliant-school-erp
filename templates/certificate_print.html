@@ -1,0 +1,4 @@
+{% extends 'layout.html' %}{% block content %}<div class="card print-card" style="min-height:500px"><h2 style="text-align:center">BRILLIANT ENGLISH SCHOOL</h2>
+<p style="text-align:center">Sangaiyumpham Part-II, Wangjing, Thoubal, Manipur</p><hr><h2 style="text-align:center">{{c.certificate_type}}</h2>
+<p>This is to certify that <b>{{c.name}}</b>, Admission No. <b>{{c.admission_no}}</b>, studying in Class <b>{{c.class_name}} {{c.section or ''}}</b>, is a student of Brilliant English School for the session <b>{{c.year}}</b>.</p>
+<p>This certificate is issued on <b>{{c.issue_date}}</b> for the purpose of {{c.purpose or 'official use'}}.</p><p><b>Certificate No.:</b> {{c.certificate_no}}</p><br><br><p style="text-align:right">Founder-Principal<br><b>Md Ahamad Khan</b></p><button onclick="window.print()">Print Certificate</button></div>{% endblock %}

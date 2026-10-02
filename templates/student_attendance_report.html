@@ -1,0 +1,5 @@
+{% extends 'layout.html' %}{% block content %}<h2>Student Attendance Report</h2>
+<form method="get" class="card form-grid"><select name="class_name"><option value="">All Classes</option>{% for c in classes %}<option {% if c.class_name==class_name %}selected{% endif %}>{{c.class_name}}</option>{% endfor %}</select>
+<input type="month" name="month" value="{{month}}"><button>Generate</button></form>
+<div class="card"><table><tr><th>Student</th><th>Class</th><th>Present</th><th>Absent</th><th>Late</th><th>Leave</th><th>Total</th><th>Attendance %</th></tr>
+{% for r in rows %}<tr><td>{{r.student.name}}</td><td>{{r.student.class_name}} {{r.student.section or ''}}</td><td>{{r.present}}</td><td>{{r.absent}}</td><td>{{r.late}}</td><td>{{r.leave}}</td><td>{{r.total}}</td><td>{{'%.2f'|format(r.percentage)}}%</td></tr>{% endfor %}</table></div>{% endblock %}

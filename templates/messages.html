@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}{% block content %}<h2>Parent & Staff Communication</h2>
+<form method="post" class="card form-grid"><select name="recipient_type" id="rt" onchange="toggleRecipients()"><option>Parent</option><option>Staff</option></select>
+<select name="recipient_id" id="student_rec"><option value="">Select Student</option>{% for s in students %}<option value="{{s.id}}">{{s.name}} — {{s.class_name}} — {{s.phone or 'No phone'}}</option>{% endfor %}</select>
+<select name="staff_id_dummy" id="staff_rec" style="display:none"><option value="">Select Staff</option>{% for s in staff %}<option value="{{s.id}}">{{s.name}}</option>{% endfor %}</select>
+<select name="channel"><option>SMS</option><option>WhatsApp</option><option>Phone</option><option>Notice</option></select>
+<textarea name="message" rows="5" placeholder="Message" required></textarea><button>Save Message</button></form>
+<div class="card"><h3>Message History</h3><table><tr><th>Date</th><th>Recipient</th><th>Phone</th><th>Channel</th><th>Status</th><th>Message</th></tr>
+{% for m in history %}<tr><td>{{m.message_date}}</td><td>{{m.recipient_name}}</td><td>{{m.phone}}</td><td>{{m.channel}}</td><td>{{m.status}}</td><td>{{m.message}}</td></tr>{% endfor %}</table></div>
+<script>
+function toggleRecipients(){let rt=document.getElementById('rt').value;document.getElementById('student_rec').style.display=rt==='Parent'?'':'none';document.getElementById('staff_rec').style.display=rt==='Staff'?'':'none';if(rt==='Staff'){document.getElementById('student_rec').removeAttribute('name')}else{document.getElementById('student_rec').setAttribute('name','recipient_id')}}
+</script>{% endblock %}

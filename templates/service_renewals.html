@@ -1,0 +1,5 @@
+{% extends 'layout.html' %}{% block content %}<h2>Service Renewal — {{session.year if session else ''}}</h2>
+<form method="post" class="card form-grid"><select name="staff_id" required><option value="">Select staff</option>{% for s in staff %}<option value="{{s.id}}">{{s.name}}</option>{% endfor %}</select>
+<input type="date" name="contract_start"><input type="date" name="contract_end"><input type="date" name="renewal_date"><select name="status"><option>Renewed</option><option>Pending</option><option>Not Renewed</option></select><input name="remarks" placeholder="Remarks"><button>Save Renewal</button></form>
+<div class="card"><table><tr><th>Staff</th><th>Start</th><th>End</th><th>Renewal Date</th><th>Status</th><th>Remarks</th></tr>
+{% for r in rows %}<tr><td>{{r.name}}</td><td>{{r.contract_start}}</td><td>{{r.contract_end}}</td><td>{{r.renewal_date}}</td><td>{{r.status}}</td><td>{{r.remarks}}</td></tr>{% endfor %}</table></div>{% endblock %}

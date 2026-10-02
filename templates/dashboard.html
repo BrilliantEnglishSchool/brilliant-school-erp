@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="crumb">⌂ &nbsp; Dashboard</div>
+
+<div class="quick-card">
+  <div class="section-title blue">⚡ Quick Links</div>
+  <div class="quick-links">
+    <a href="{{ url_for('students') }}" class="quick-link"><span class="ql-icon">▧</span><b>Form</b></a>
+    <a href="{{ url_for('students') }}" class="quick-link"><span class="ql-icon">▣</span><b>Registration &amp; Admission</b></a>
+    <a href="{{ url_for('hostel') }}" class="quick-link"><span class="ql-icon">▥</span><b>Hostel Admission</b></a>
+    <a href="{{ url_for('fees') }}" class="quick-link"><span class="ql-icon">₹</span><b>Fee Collection</b></a>
+  </div>
+</div>
+
+<div class="dashboard-top-grid">
+  <div class="school-card">
+    <button class="edit-school" title="School settings">✎</button>
+    <img src="{{ url_for('static', filename='school_logo.png') }}" class="school-logo" alt="School Logo">
+    <div class="school-details">
+      <h2>BRILLIANT ENGLISH SCHOOL</h2>
+      <div>SANGAIYUMPHAM CHERAPUR</div>
+      <div>THOUBAL</div>
+      <div>Govt. Registration No. G/54(Vol-IV)32943</div>
+      <div>Govt. Recognition No. 32943</div>
+      <div>Pin- 795148</div>
+      <div>Mobile- 7005629720</div>
+      <div>Email- ahamadbes123@gmail.com</div>
+    </div>
+  </div>
+
+  <div class="session-card">
+    <div class="section-title blue">▥ Current Session Report</div>
+    <div class="class-chart">
+      {% set max_total = class_report|map(attribute='total')|max|default(1) %}
+      {% for r in class_report %}
+      <div class="chart-row">
+        <span class="chart-label">{{ r.class_name }}</span>
+        <div class="stack">
+          <span class="male" style="width:{{ (r.male / max_total * 100) if max_total else 0 }}%">{{ r.male if r.male else '' }}</span>
+          <span class="female" style="width:{{ (r.female / max_total * 100) if max_total else 0 }}%">{{ r.female if r.female else '' }}</span>
+        </div>
+        <span class="chart-total">{{ r.total }}</span>
+      </div>
+      {% else %}
+      <div class="empty-chart">No student records yet. Add students from the Student module.</div>
+      {% endfor %}
+      <div class="legend"><span><i class="dot male-dot"></i> Male</span><span><i class="dot female-dot"></i> Female</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="report-card">
+  <div class="section-title blue">▥ Overall Session Student Report</div>
+  <div class="overall-chart">
+    {% set max_session = session_reports|map(attribute='total')|max|default(1) %}
+    {% for r in session_reports %}
+    <div class="overall-row">
+      <span class="year-label">{{ r.year }}-{{ (r.year + 1) % 100 }}</span>
+      <div class="overall-stack">
+        <span class="male" style="width:{{ (r.male / max_session * 100) if max_session else 0 }}%">{{ r.male if r.male else '' }}</span>
+        <span class="female" style="width:{{ (r.female / max_session * 100) if max_session else 0 }}%">{{ r.female if r.female else '' }}</span>
+      </div>
+      <span class="overall-total">{{ r.total }}</span>
+    </div>
+    {% else %}
+    <div class="empty-chart">No session data yet.</div>
+    {% endfor %}
+    <div class="legend"><span><i class="dot male-dot"></i> Male</span><span><i class="dot female-dot"></i> Female</span></div>
+  </div>
+</div>
+
+<div class="summary-strip">
+  <div><b>{{ stats.students }}</b><span>Students</span></div>
+  <div><b>{{ stats.staff }}</b><span>Staff</span></div>
+  <div><b>{{ stats.classes }}</b><span>Classes</span></div>
+  <div><b>{{ hostel_residents }}</b><span>Hostel Residents</span></div>
+  <div><b>₹{{ "%.0f"|format(fee_total|float) }}</b><span>Fees Collected</span></div>
+  <div><b>{{ notices }}</b><span>Published Notices</span></div>
+</div>
+{% endblock %}

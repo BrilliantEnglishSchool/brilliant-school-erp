@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}{% block content %}
+<h2>Examination Results</h2><div class="card"><form method="get"><select name="group_id" onchange="this.form.submit()"><option value="">Select examination</option>
+{% for g in groups %}<option value="{{g.id}}" {% if group and group.id==g.id %}selected{% endif %}>{{g.name}} — Class {{g.class_name}}</option>{% endfor %}
+</select></form></div>{% if group %}<div class="card"><h3>{{group.name}} — Class {{group.class_name}}</h3>
+<table><tr><th>Rank</th><th>Roll</th><th>Student</th><th>Total</th><th>%</th><th>Grade</th><th>Result</th><th></th></tr>
+{% for r in rows %}<tr><td>{{r.rank}}</td><td>{{r.student.roll_number or '-'}}</td><td>{{r.student.name}}</td><td>{{'%.2f'|format(r.total)}} / {{'%.2f'|format(r.max_total)}}</td>
+<td>{{'%.2f'|format(r.percentage)}}%</td><td>{{r.grade}}</td><td>{{'PASS' if r.passed else 'FAIL'}}</td><td><a class="btn" href="{{url_for('report_card',group_id=group.id,student_id=r.student.id)}}">Report Card</a></td></tr>{% endfor %}
+</table></div>{% endif %}{% endblock %}

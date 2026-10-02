@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}{% block content %}<h2>Student Attendance</h2>
+<form method="get" class="card form-grid"><input type="date" name="date" value="{{selected_date}}">
+<select name="class_name"><option value="">Select class</option>{% for c in classes %}<option {% if c.class_name==class_name %}selected{% endif %}>{{c.class_name}}</option>{% endfor %}</select><button>Load Students</button></form>
+{% if students %}<form method="post"><input type="hidden" name="date" value="{{selected_date}}"><input type="hidden" name="class_name" value="{{class_name}}">
+<div class="card"><table><tr><th>Roll</th><th>Student</th><th>Section</th><th>Status</th><th>Remarks</th></tr>
+{% for s in students %}{% set e=existing.get(s.id) %}<tr><td>{{s.roll_number or '-'}}</td><td>{{s.name}}</td><td>{{s.section or '-'}}</td>
+<td><select name="status_{{s.id}}">{% for x in ['Present','Absent','Late','Leave'] %}<option {% if e and e[0]==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></td>
+<td><input name="remarks_{{s.id}}" value="{{e[1] if e else ''}}"></td></tr>{% endfor %}</table><button>Save Attendance</button></div></form>{% endif %}{% endblock %}

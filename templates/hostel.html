@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block title %}Hostel Management{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>Hostel Management</h1><p class="muted">Hostel admission, hostel fee setup and fee collection for the active session.</p></div>
+  <button class="btn" onclick="window.print()">Print</button>
+</div>
+
+<div class="hostel-kpis">
+  <div class="kpi"><span>Hostel Residents</span><strong>{{ admissions|selectattr('status','equalto','Active')|list|length }}</strong><small>Active admissions</small></div>
+  <div class="kpi"><span>Fee Structures</span><strong>{{ structures|length }}</strong><small>Configured fees</small></div>
+  <div class="kpi"><span>Collections</span><strong>₹{{ "%.2f"|format(total_collected|float) }}</strong><small>Current session</small></div>
+  <div class="kpi"><span>Payments</span><strong>{{ payments|length }}</strong><small>Recent records</small></div>
+</div>
+
+<div class="panel">
+ <div class="panel-head"><h2>Hostel Admission</h2></div>
+ <form method="post" action="{{url_for('hostel_admission_save')}}" class="form-grid">
+  <label>Student<select name="student_id" required><option value="">Select student</option>{% for s in students %}<option value="{{s.id}}">{{s.name}} — {{s.class_name}} — {{s.admission_no}}</option>{% endfor %}</select></label>
+  <label>Hostel Name<input name="hostel_name" required placeholder="e.g. Boys Hostel"></label>
+  <label>Room No.<input name="room_no" placeholder="e.g. 101"></label>
+  <label>Bed No.<input name="bed_no" placeholder="e.g. B-04"></label>
+  <label>Admission Date<input type="date" name="admission_date" required></label>
+  <label>Guardian Name<input name="guardian_name"></label>
+  <label>Guardian Phone<input name="guardian_phone"></label>
+  <label>Status<select name="status"><option>Active</option><option>Inactive</option></select></label>
+  <label>Remarks<input name="remarks"></label>
+  <div><button class="btn primary">Save Hostel Admission</button></div>
+ </form>
+</div>
+
+<div class="panel">
+ <div class="panel-head"><h2>Hostel Residents</h2></div>
+ <table class="table"><thead><tr><th>Student</th><th>Class</th><th>Hostel</th><th>Room</th><th>Bed</th><th>Admission Date</th><th>Status</th><th></th></tr></thead><tbody>
+ {% for a in admissions %}
+ <tr><td><b>{{a.student_name}}</b><small>{{a.admission_no}}</small></td><td>{{a.class_name}}</td><td>{{a.hostel_name}}</td><td>{{a.room_no}}</td><td>{{a.bed_no}}</td><td>{{a.admission_date}}</td><td>{{a.status}}</td>
+ <td><form method="post" action="{{url_for('hostel_admission_status',admission_id=a.id)}}"><input type="hidden" name="status" value="{{'Inactive' if a.status=='Active' else 'Active'}}"><button class="btn small">{{'Deactivate' if a.status=='Active' else 'Activate'}}</button></form></td></tr>
+ {% else %}<tr><td colspan="8">No hostel admissions recorded.</td></tr>{% endfor %}
+ </tbody></table>
+</div>
+
+<div class="panel">
+ <div class="panel-head"><h2>Hostel Fee Structure</h2></div>
+ <form method="post" action="{{url_for('hostel_fee_save')}}" class="form-grid">
+  <label>Hostel Name<input name="hostel_name" required placeholder="e.g. Boys Hostel"></label>
+  <label>Fee Name<input name="fee_name" required placeholder="Hostel Fee"></label>
+  <label>Amount (₹)<input type="number" step="0.01" min="0" name="amount" required></label>
+  <label>Frequency<select name="frequency"><option>Monthly</option><option>Quarterly</option><option>Half-Yearly</option><option>Annual</option><option>One-Time</option></select></label>
+  <label>Class (optional)<input name="class_name" placeholder="e.g. Class VIII"></label>
+  <div><button class="btn primary">Add Fee Structure</button></div>
+ </form>
+ <table class="table compact"><thead><tr><th>Hostel</th><th>Fee</th><th>Amount</th><th>Frequency</th><th>Class</th><th>Status</th><th></th></tr></thead><tbody>
+ {% for f in structures %}<tr><td>{{f.hostel_name}}</td><td>{{f.fee_name}}</td><td>₹{{"%.2f"|format(f.amount|float)}}</td><td>{{f.frequency}}</td><td>{{f.class_name or 'All'}}</td><td>{{'Active' if f.active else 'Inactive'}}</td><td><form method="post" action="{{url_for('hostel_fee_toggle',fee_id=f.id)}}"><button class="btn small">{{'Disable' if f.active else 'Enable'}}</button></form></td></tr>{% else %}<tr><td colspan="7">No hostel fee structures.</td></tr>{% endfor %}
+ </tbody></table>
+</div>
+
+<div class="panel">
+ <div class="panel-head"><h2>Hostel Fee Collection</h2></div>
+ <form method="post" action="{{url_for('hostel_payment_save')}}" class="form-grid">
+  <label>Student<select name="student_id" required><option value="">Select hostel resident</option>{% for a in admissions if a.status=='Active' %}<option value="{{a.student_id}}">{{a.student_name}} — {{a.class_name}} — {{a.hostel_name}} / {{a.room_no}}</option>{% endfor %}</select></label>
+  <label>Payment Date<input type="date" name="payment_date" required></label>
+  <label>Fee Name<input name="fee_name" required placeholder="Monthly Hostel Fee"></label>
+  <label>Amount (₹)<input type="number" step="0.01" min="0" name="amount" required></label>
+  <label>Payment Mode<select name="payment_mode"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Cheque</option><option>Other</option></select></label>
+  <label>Reference No.<input name="reference_no"></label>
+  <label>Remarks<input name="remarks"></label>
+  <div><button class="btn primary">Collect Hostel Fee</button></div>
+ </form>
+ <table class="table"><thead><tr><th>Receipt</th><th>Date</th><th>Student</th><th>Fee</th><th>Amount</th><th>Mode</th><th></th></tr></thead><tbody>
+ {% for p in payments %}<tr><td>{{p.receipt_no}}</td><td>{{p.payment_date}}</td><td>{{p.student_name}}<small>{{p.admission_no}}</small></td><td>{{p.fee_name}}</td><td>₹{{"%.2f"|format(p.amount|float)}}</td><td>{{p.payment_mode}}</td><td><a class="btn small" href="{{url_for('hostel_payment_receipt',payment_id=p.id)}}">Receipt</a></td></tr>{% else %}<tr><td colspan="7">No hostel fee collections.</td></tr>{% endfor %}
+ </tbody></table>
+</div>
+{% endblock %}

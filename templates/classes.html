@@ -1,0 +1,10 @@
+{% extends "layout.html" %}{% block content %}
+<div class="top"><div><h1>Classes & Sections</h1><div class="muted">Academic structure for session {{active.year}}</div></div></div>
+<div class="card"><h3>Add Class / Section</h3><form method="post"><div class="formgrid">
+<div><label>Class</label><input class="input" name="class_name" placeholder="Class IX" required></div>
+<div><label>Section</label><input class="input" name="section" placeholder="A"></div>
+<div><label>Class Teacher</label><input class="input" name="class_teacher" placeholder="Teacher name"></div>
+</div><br><button class="btn">Add Class</button></form></div>
+<div class="card"><table class="table"><tr><th>Class</th><th>Section</th><th>Class Teacher</th><th>Students</th></tr>
+{% for x in classes %}<tr><td>{{x.class_name}}</td><td>{{x.section}}</td><td>{{x.class_teacher}}</td><td>{{x.student_count}}</td></tr>{% else %}<tr><td colspan="4">No class structure created yet.</td></tr>{% endfor %}</table></div>
+{% endblock %}

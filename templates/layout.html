@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brilliant English School ERP</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% if session.get('user_id') %}
+<header class="erp-topbar">
+  <div class="top-left">
+    <div class="top-home">⌂</div>
+    <div class="school-code">VS00060<br><span>BRILLIANT ENGLISH SCHOOL</span></div>
+    <div class="top-session">{{ active.year if active else '—' }}-{{ (active.year + 1) % 100 if active else '—' }}</div>
+  </div>
+  <div class="top-center">
+    <b>Student Capacity: {{ capacity if capacity is defined else 500 }}</b>
+    <span>Total Student Intake: {{ stats.students if stats is defined else 0 }} (Seats available: {{ seats if seats is defined else 0 }})</span>
+  </div>
+  <div class="top-user">Welcome! MD AHAMAD KHAN (Admin) <a href="{{ url_for('logout') }}" title="Logout">⏻</a></div>
+</header>
+
+<aside class="erp-sidebar">
+  <a class="nav-item active" href="{{ url_for('dashboard') }}"><span>▣</span>Dashboard <b>›</b></a>
+  <div class="nav-section">QUICK ACCESS</div>
+  <a class="nav-item" href="{{ url_for('students') }}"><span>⚡</span>Quick Access <b>›</b></a>
+  <div class="nav-section">MANAGEMENT</div>
+  <a class="nav-item" href="{{ url_for('students') }}"><span>▤</span>Form <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('students') }}"><span>♟</span>Student <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('fees') }}"><span>₹</span>Fee Collect <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('timetable') }}"><span>▦</span>Time-Table <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('exams') }}"><span>✎</span>Exam <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('hostel') }}"><span>▥</span>Hostel <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('students') }}"><span>▧</span>Certificate <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('students') }}"><span>▣</span>ID Card <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('staff') }}"><span>♟</span>Employee <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('attendance') }}"><span>◷</span>Attendance <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('staff') }}"><span>▤</span>Payroll <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('calendar') }}"><span>▣</span>Holiday & Notice <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('portal_accounts') }}"><span>✉</span>Parent Portal <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('hostel') }}"><span>▰</span>Hostel Fees <b>›</b></a>
+  <a class="nav-item" href="{{ url_for('logout') }}"><span>⏻</span>Logout</a>
+</aside>
+
+<main class="erp-main">
+  {% with messages=get_flashed_messages() %}
+    {% for m in messages %}<div class="flash">{{ m }}</div>{% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+{% else %}
+{% block content %}{% endblock %}
+{% endif %}
+</body>
+</html>

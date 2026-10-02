@@ -1,0 +1,2 @@
+{% extends 'layout.html' %}{% block content %}<h2>Convert Admission to Student</h2><div class="card"><p><b>Application:</b> {{app.application_no}}</p><p><b>Student:</b> {{app.student_name}}</p><form method="post" class="form-grid">
+<input name="section" placeholder="Section"><input name="roll_number" placeholder="Roll Number"><button>Admit Student</button></form></div>{% endblock %}

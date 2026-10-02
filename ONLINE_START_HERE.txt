@@ -1,0 +1,26 @@
+BRILLIANT ENGLISH SCHOOL ERP — ONLINE EDITION
+
+This version is prepared for browser-based hosting.
+School computers/phones do NOT need Python, Flask, or any ERP installation.
+
+RECOMMENDED DEPLOYMENT
+1. Create a GitHub repository.
+2. Upload the contents of this folder to the repository.
+3. Open Render and choose New -> Blueprint.
+4. Select the GitHub repository.
+5. Render reads render.yaml automatically.
+6. Enter ADMIN_USERNAME and ADMIN_PASSWORD when prompted.
+7. Deploy.
+8. Open the HTTPS URL provided by Render.
+9. Login using the credentials you configured.
+
+CUSTOM DOMAIN
+After deployment you can connect a school domain/subdomain, for example:
+erp.yourschooldomain.com
+
+DATA
+This edition stores the SQLite database under /var/data and uses a persistent Render disk.
+It is designed for one running web-service instance. For larger deployments, migrate to PostgreSQL.
+
+IMPORTANT SECURITY
+Do not use admin123 as the production password. Set a strong password during deployment.

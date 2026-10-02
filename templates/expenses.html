@@ -1,0 +1,4 @@
+{% extends 'layout.html' %}{% block content %}<h2>Expenses</h2><form method="post" class="card form-grid">
+<input type="date" name="expense_date"><input name="category" placeholder="Category" required><input name="description" placeholder="Description">
+<input type="number" step="0.01" name="amount" placeholder="Amount" required><select name="payment_mode"><option>Cash</option><option>Bank Transfer</option><option>UPI</option><option>Cheque</option></select><button>Add Expense</button></form>
+<div class="card"><table><tr><th>Date</th><th>Category</th><th>Description</th><th>Mode</th><th>Amount</th></tr>{% for x in rows %}<tr><td>{{x.expense_date}}</td><td>{{x.category}}</td><td>{{x.description or ''}}</td><td>{{x.payment_mode}}</td><td>₹{{'%.2f'|format(x.amount)}}</td></tr>{% endfor %}</table></div>{% endblock %}

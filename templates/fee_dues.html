@@ -1,0 +1,3 @@
+{% extends 'layout.html' %}{% block content %}<h2>Fee Due Report — {{session.year if session else ''}}</h2>
+<div class="card"><table><tr><th>Student</th><th>Class</th><th>Assessed</th><th>Paid</th><th>Balance Due</th></tr>
+{% for r in rows %}<tr><td>{{r.student.name}}</td><td>{{r.student.class_name}} {{r.student.section or ''}}</td><td>₹{{'%.2f'|format(r.assessed)}}</td><td>₹{{'%.2f'|format(r.paid)}}</td><td>₹{{'%.2f'|format(r.balance)}}</td></tr>{% endfor %}</table></div>{% endblock %}

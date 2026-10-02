@@ -1,0 +1,3 @@
+{% extends "layout.html" %}{% block title %}Parent & Student Portal{% endblock %}{% block content %}
+<div class="portal-login"><div class="portal-box"><div class="portal-logo">BES</div><h1>Parent & Student Portal</h1><p class="muted">Brilliant English School</p>
+{% if error %}<div class="alert">{{error}}</div>{% endif %}<form method="post"><label>Username<input name="username" required></label><label>Password<input type="password" name="password" required></label><button class="btn primary full">Login</button></form><p class="muted portal-note">Contact the school office for portal credentials.</p></div></div>{% endblock %}

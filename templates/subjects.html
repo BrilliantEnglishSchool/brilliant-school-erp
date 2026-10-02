@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}{% block content %}
+<h2>Subjects</h2><form method="post" class="card form-grid">
+<input name="name" placeholder="Subject name" required><input name="code" placeholder="Code (optional)"><button>Add Subject</button></form>
+<div class="card"><table><tr><th>Subject</th><th>Code</th><th>Status</th></tr>
+{% for s in subjects %}<tr><td>{{s.name}}</td><td>{{s.code or ''}}</td><td>{{s.status}}</td></tr>{% endfor %}
+</table></div>{% endblock %}

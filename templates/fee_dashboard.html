@@ -1,0 +1,5 @@
+{% extends 'layout.html' %}{% block content %}<h2>Fee Dashboard</h2>{% if session %}
+<div class="cards"><div class="card"><h3>Students</h3><b>{{summary.students}}</b></div><div class="card"><h3>Collected</h3><b>₹{{'%.2f'|format(summary.collected)}}</b></div>
+<div class="card"><h3>Expenses</h3><b>₹{{'%.2f'|format(summary.expenses)}}</b></div><div class="card"><h3>Balance</h3><b>₹{{'%.2f'|format(summary.balance)}}</b></div></div>
+<div class="card"><h3>Recent Collections</h3><table><tr><th>Receipt</th><th>Date</th><th>Student</th><th>Class</th><th>Amount</th></tr>
+{% for p in recent %}<tr><td>{{p.receipt_no}}</td><td>{{p.payment_date}}</td><td>{{p.student_name}}</td><td>{{p.class_name}}</td><td>₹{{'%.2f'|format(p.amount)}}</td></tr>{% endfor %}</table></div>{% endif %}{% endblock %}

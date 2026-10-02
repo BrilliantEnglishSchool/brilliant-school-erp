@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Hostel Fee Receipt{% endblock %}
+{% block content %}
+<div class="receipt">
+ <div class="receipt-head"><div><h1>BRILLIANT ENGLISH SCHOOL</h1><p>Sangaiyumpham Part-II, Wangjing, Thoubal, Manipur</p></div><h2>HOSTEL FEE RECEIPT</h2></div>
+ <hr>
+ <div class="receipt-grid">
+  <p><b>Receipt No.:</b> {{payment.receipt_no}}</p><p><b>Date:</b> {{payment.payment_date}}</p>
+  <p><b>Student:</b> {{payment.student_name}}</p><p><b>Admission No.:</b> {{payment.admission_no}}</p>
+  <p><b>Class:</b> {{payment.class_name}}</p><p><b>Hostel:</b> {{payment.hostel_name}}</p>
+  <p><b>Room:</b> {{payment.room_no}}</p><p><b>Bed:</b> {{payment.bed_no}}</p>
+ </div>
+ <table class="table"><tr><th>Fee Description</th><th>Amount</th></tr><tr><td>{{payment.fee_name}}</td><td>₹{{"%.2f"|format(payment.amount|float)}}</td></tr></table>
+ <p><b>Payment Mode:</b> {{payment.payment_mode}} {% if payment.reference_no %} · <b>Reference:</b> {{payment.reference_no}}{% endif %}</p>
+ <div class="signature-row"><span>Parent/Guardian</span><span>Accounts Office</span></div>
+ <button class="btn print-hide" onclick="window.print()">Print Receipt</button>
+</div>
+{% endblock %}
